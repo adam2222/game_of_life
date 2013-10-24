@@ -5,7 +5,6 @@ function GameOfLife(width,height) {
 
 GameOfLife.prototype.createAndShowBoard = function () {
   var goltable = document.createElement("table");
-  
   var tablehtml = '';
   
   for (var h=0; h<this.height; h++) {
@@ -35,7 +34,10 @@ GameOfLife.prototype.setupBoardEvents = function() {
 };
 
 GameOfLife.prototype.step = function () {
-  
+  // Here is where you want to loop through all the cells
+  // on the board and determine, based on it's neighbors,
+  // whether the cell should be dead or alive in the next
+  // evolution of the game
 };
 
 startGame = function () {
