@@ -18,7 +18,15 @@ GameOfLife.prototype.createAndShowBoard = function () {
   goltable.innerHTML = tablehtml;
   var board = document.getElementById('board');
   board.appendChild(goltable);
-  this.setupBoardEvents(board);
+  this.setupBoardEvents();
+};
+
+GameOfLife.prototype.coordinateHelper = function(coordArr) {
+  if(coordArr) {
+    return {x: coordArr[0], y: coordArr[1]};
+  } else {
+    return false;
+  }
 };
 
 GameOfLife.prototype.setupBoardEvents = function() {
@@ -31,6 +39,21 @@ GameOfLife.prototype.setupBoardEvents = function() {
   
   // clicking on a cell should toggle the cell between "alive" & "dead"
   // for ex: an "alive" cell be colored "blue", a dead cell could stay white
+  
+  // for example, here is how we would catch a click event on just the 0-0 cell
+  // you need to do something like this for EVERY cell 
+  
+  var onCellClick = function (e) {
+    // coordinates of cell, in case you need them
+    var coord_array = this.id.split('-');
+    var coord_hash = {x: coord_array[0], y: coord_array[1]};
+    
+    // how to set the style of the cell when it's clicked
+    this.style.backgroundColor = "lightblue";
+  };
+  
+  var cell00 = document.getElementById('0-0');
+  cell00.onclick = onCellClick;
 };
 
 GameOfLife.prototype.step = function () {
