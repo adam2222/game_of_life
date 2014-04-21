@@ -4,29 +4,26 @@ function GameOfLife(width,height) {
 }
 
 GameOfLife.prototype.createAndShowBoard = function () {
+  // create <table> element
   var goltable = document.createElement("table");
-  var tablehtml = '';
   
+  // build Table HTML
+  var tablehtml = '';
   for (var h=0; h<this.height; h++) {
     tablehtml += "<tr id='row+" + h + "'>";
     for (var w=0; w<this.width; w++) {
-      tablehtml += "<td id='" + w + "-" + h + "'></td>";
+      tablehtml += "<td data-status='dead' id='" + w + "-" + h + "'></td>";
     }
     tablehtml += "</tr>";
   }
-  
   goltable.innerHTML = tablehtml;
+  
+  // add table to the #board element
   var board = document.getElementById('board');
   board.appendChild(goltable);
+  
+  // once html elements are added to the page, attach events to them
   this.setupBoardEvents();
-};
-
-GameOfLife.prototype.coordinateHelper = function(coordArr) {
-  if(coordArr) {
-    return {x: coordArr[0], y: coordArr[1]};
-  } else {
-    return false;
-  }
 };
 
 GameOfLife.prototype.setupBoardEvents = function() {
@@ -40,8 +37,9 @@ GameOfLife.prototype.setupBoardEvents = function() {
   // clicking on a cell should toggle the cell between "alive" & "dead"
   // for ex: an "alive" cell be colored "blue", a dead cell could stay white
   
-  // for example, here is how we would catch a click event on just the 0-0 cell
-  // you need to do something like this for EVERY cell 
+  // EXAMPLE FOR ONE CELL
+  // Here is how we would catch a click event on just the 0-0 cell
+  // You need to add the click event on EVERY cell on the board
   
   var onCellClick = function (e) {
     // coordinates of cell, in case you need them
@@ -49,7 +47,13 @@ GameOfLife.prototype.setupBoardEvents = function() {
     var coord_hash = {x: coord_array[0], y: coord_array[1]};
     
     // how to set the style of the cell when it's clicked
-    this.style.backgroundColor = "lightblue";
+    if (this.getAttribute('data-status') == 'dead') {
+      this.className = "alive";
+      this.setAttribute('data-status', 'alive');
+    } else {
+      this.className = "dead";
+      this.setAttribute('data-status', 'dead');
+    }
   };
   
   var cell00 = document.getElementById('0-0');
@@ -61,11 +65,14 @@ GameOfLife.prototype.step = function () {
   // on the board and determine, based on it's neighbors,
   // whether the cell should be dead or alive in the next
   // evolution of the game
+  
 };
 
-startGame = function () {
-  var gol = new GameOfLife(20,20);
-  gol.createAndShowBoard();
+GameOfLife.prototype.enableAutoPlay = function () {
+  // Start Auto-Play by running the 'step' function
+  // automatically repeatedly every fixed time interval
+  
 };
 
-startGame();
+var gol = new GameOfLife(20,20);
+gol.createAndShowBoard();
