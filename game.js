@@ -5,7 +5,7 @@ function GameOfLife(width,height) {
 
 GameOfLife.prototype.createAndShowBoard = function () {
   // create <table> element
-  var goltable = document.createElement("table");
+  var goltable = document.createElement("tbody");
   
   // build Table HTML
   var tablehtml = '';
