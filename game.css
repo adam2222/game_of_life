@@ -10,9 +10,9 @@ h1, h2 {
 }
 
 #board td{
-  border: 1px solid #ccc;
-  width: 16px;
-  height: 16px;
+  border: 1px solid #ddd;
+  width: 18px;
+  height: 18px;
 }
 
 td.alive {
