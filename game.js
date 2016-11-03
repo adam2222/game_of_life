@@ -33,6 +33,19 @@ var gameOfLife = {
       and pass into func, the cell and the cell's x & y
       coordinates. For example: iteratorFunc(cell, x, y)
     */
+    var rows = document.getElementsByTagName("TBODY")[0].children;
+    rows = [].slice.call(rows);
+
+    rows.forEach(function(row) {
+      var rowCells = [].slice.call(row.children);
+      rowCells.forEach(function(cell) {
+        var x = cell.id[0];
+        var y = cell.id[2];
+        iteratorFunc(cell, x, y);
+      })
+    })
+
+
   },
   
   setupBoardEvents: function() {
@@ -62,9 +75,10 @@ var gameOfLife = {
         this.setAttribute('data-status', 'dead');
       }
     };
-    
-    var cell00 = document.getElementById('0-0');
-    cell00.onclick = onCellClick;
+
+    this.forEachCell(function(cell) {
+      cell.onclick = onCellClick;
+    });
   },
 
   step: function () {
@@ -76,6 +90,27 @@ var gameOfLife = {
     // You need to:
     // 1. Count alive neighbors for all cells
     // 2. Set the next state of all cells based on their alive neighbors
+
+    this.forEachCell(function(cell, x, y) {
+      var aliveNeighbors = 0;
+
+      this.forEachCell(function(cell2, x2, y2) {
+        if((Math.abs(x-x2) <= 1) && (Math.abs(y-y2) <= 1) && cell2.getAttribute('data-status') === "alive") {
+          aliveNeighbors ++;
+        }
+
+        if((cell.getAttribute("data-status") === "alive") && (aliveNeighbors < 2 || aliveNeighbors > 3)) {
+          cell.setAttribute("data-status") = "dead";
+        }
+
+        if((cell.getAttribute("data-status") === "dead") && (aliveNeighbors === 3)) {
+          cell.setAttribute("data-status") = "alive";
+        }
+        }
+      });
+    });
+
+
     
   },
 
@@ -87,3 +122,4 @@ var gameOfLife = {
 };
 
   gameOfLife.createAndShowBoard();
+
