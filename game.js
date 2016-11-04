@@ -1,12 +1,16 @@
 var gameOfLife = {
-  width: 12,
-  height: 12,
+  width: 200,
+  height: 200,
   stepInterval: null,
 
   createAndShowBoard: function () {
     // create <table> element
-    var goltable = document.createElement("tbody");
+    let dimensions = window.prompt('Set size')
+    gameOfLife.width = dimensions;
+    gameOfLife.height = dimensions;
     
+    var goltable = document.createElement("tbody");
+
     // build Table HTML
     var tablehtml = '';
     for (var h=0; h<this.height; h++) {
@@ -17,17 +21,17 @@ var gameOfLife = {
       tablehtml += "</tr>";
     }
     goltable.innerHTML = tablehtml;
-    
+
     // add table to the #board element
     var board = document.getElementById('board');
     board.appendChild(goltable);
-    
+
     // once html elements are added to the page, attach events to them
     this.setupBoardEvents();
   },
 
   forEachCell: function (iteratorFunc) {
-    /* 
+    /*
       Write forEachCell here. You will have to visit
       each cell on the board, call the "iteratorFunc" function,
       and pass into func, the cell and the cell's x & y
@@ -39,33 +43,33 @@ var gameOfLife = {
     rows.forEach(function(row) {
       var rowCells = [].slice.call(row.children);
       rowCells.forEach(function(cell) {
-        var x = cell.id[0];
-        var y = cell.id[2];
+        var x = cell.id.split("-")[0];
+        var y = cell.id.split("-")[1];
         iteratorFunc(cell, x, y);
       })
     })
 
 
   },
-  
+
   setupBoardEvents: function() {
-    // each board cell has an CSS id in the format of: "x-y" 
+    // each board cell has an CSS id in the format of: "x-y"
     // where x is the x-coordinate and y the y-coordinate
     // use this fact to loop through all the ids and assign
-    // them "on-click" events that allow a user to click on 
+    // them "on-click" events that allow a user to click on
     // cells to setup the initial state of the game
     // before clicking "Step" or "Auto-Play"
-    
+
     // clicking on a cell should toggle the cell between "alive" & "dead"
     // for ex: an "alive" cell be colored "blue", a dead cell could stay white
-    
+
     // EXAMPLE FOR ONE CELL
     // Here is how we would catch a click event on just the 0-0 cell
     // You need to add the click event on EVERY cell on the board
-    
+
     var onCellClick = function (e) {
       // QUESTION TO ASK YOURSELF: What is "this" equal to here?
-      
+
       // how to set the style of the cell when it's clicked
       if (this.getAttribute('data-status') == 'dead') {
         this.className = "alive";
@@ -85,34 +89,60 @@ var gameOfLife = {
     // Here is where you want to loop through all the cells
     // on the board and determine, based on it's neighbors,
     // whether the cell should be dead or alive in the next
-    // evolution of the game. 
+    // evolution of the game.
     //
     // You need to:
     // 1. Count alive neighbors for all cells
     // 2. Set the next state of all cells based on their alive neighbors
+    var getNeighbors = function(x, y){
+      var neighbors = [];
+      for (var diffx = -1; diffx <= 1; diffx++) {
+        for (var diffy = -1; diffy <= 1; diffy++) {
+          if (diffx === 0 && diffy === 0) continue;
+          // debugger;
+          var newX = +x + diffx;
+          var newY = +y + diffy;
+          // console.log(newX, newY);
+          neighbors.push(document.getElementById(+x + diffx + "-" + newY));
+        }
+      }
+      return neighbors;
+    }
 
     gameOfLife.forEachCell(function(cell, x, y) {
+      var neighbors = getNeighbors(x, y);
       var aliveNeighbors = 0;
-  
-      gameOfLife.forEachCell(function(cell2, x2, y2) {
-        if((Math.abs(x-x2) <= 1) && (Math.abs(y-y2) <= 1) && cell2.getAttribute('class') === "alive" && !(x === x2 && y === y2)) {
-          aliveNeighbors ++;
-        }
-      });  
-        console.log(aliveNeighbors);
-        if((cell.getAttribute("class") === "alive") && (aliveNeighbors < 2 || aliveNeighbors > 3)) {
-          cell.setAttribute("data-status", "dead");
+
+      neighbors.forEach(function(neighbor){
+        if (neighbor && neighbor.getAttribute('class') === "alive") aliveNeighbors++;
+      });
+
+      // gameOfLife.forEachCell(function(cell2, x2, y2) {
+      //
+      //
+        // if((Math.abs(x-x2) <= 1) && (Math.abs(y-y2) <= 1) && cell2.getAttribute('class') === "alive" && !(x === x2 && y === y2)) {
+      //     aliveNeighbors ++;
+      //   }
+      // });
+      //   // debugger;
+        if(cell.className === "alive") {
+          if (aliveNeighbors < 2 || aliveNeighbors > 3) {
+            cell.setAttribute("data-status", "dead");
+          }
+        } else if(aliveNeighbors === 3){
+            cell.setAttribute("data-status", "alive");
         }
 
-        if((cell.getAttribute("class") === "dead") && (aliveNeighbors === 3)) {
-          cell.setAttribute("data-status", "alive");
-        }
 
         // debugger;
     });
 
     gameOfLife.forEachCell(function(cell){
-      cell.getAttribute("data-status") === "alive" ? cell.setAttribute("class", "alive") : cell.setAttribute("class", "dead");
+      if (cell.getAttribute("data-status") === "alive"){
+        cell.setAttribute("class", "alive");
+      } else {
+        cell.setAttribute("class", "dead");
+      }
     });
 
     // newBoard variable for next generation
@@ -140,7 +170,7 @@ var gameOfLife = {
     //     if(aliveNeighbors < 2 || aliveNeighbors > 3) {
     //       cell.setAttribute("data-status", "dead");
     //     } else if (cell.getAttribute("data-status") === "dead" && (aliveNeighbors === 3)) {
-    //       cell.setAttribute("data-status", "alive"); 
+    //       cell.setAttribute("data-status", "alive");
     //     }
     //   }
     // });
@@ -149,18 +179,40 @@ var gameOfLife = {
   enableAutoPlay: function () {
     // Start Auto-Play by running the 'step' function
     // automatically repeatedly every fixed time interval
-    
+
   }
 };
 
   gameOfLife.createAndShowBoard();
   document.getElementById("step_btn").onclick = gameOfLife.step;
+  // debugger;
+
 
   // gameOfLife.forEachCell(gameOfLife.step);
 
+  var interval;
+  document.getElementById("play_btn").onclick =
+    function(){
+       interval = setInterval(gameOfLife.step, 100);
+  };
+  document.getElementById("clear_btn").onclick = function(){
+       clearInterval(interval);
+       gameOfLife.forEachCell(function(cell){
+         cell.setAttribute("data-status", "dead");
+         cell.setAttribute("class", "dead");
+       });
+  };
 
-
-
-
-
-
+  document.getElementById("reset_btn").onclick = function(){
+       clearInterval(interval);
+       gameOfLife.forEachCell(function(cell){
+         var randNum = Math.random() * 2;
+         if (Math.floor(randNum) === 1){
+           cell.setAttribute("data-status", "dead");
+           cell.setAttribute("class", "dead");
+         } else {
+           cell.setAttribute("data-status", "alive");
+           cell.setAttribute("class", "alive");
+         }
+       });
+  };

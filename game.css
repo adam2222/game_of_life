@@ -1,5 +1,7 @@
 body {
   padding: 10px;
+  /*width: 1024px;
+  height: 500px;*/
 }
 
 h1, h2 {
@@ -7,12 +9,15 @@ h1, h2 {
 }
 #board{
   margin: 0 auto;
+  width: 700px;
+  height: 700px;
 }
+
 
 #board td{
   border: 1px solid #ddd;
-  width: 18px;
-  height: 18px;
+  /*width: 18px;
+  height: 18px;*/
 }
 
 td.alive {
