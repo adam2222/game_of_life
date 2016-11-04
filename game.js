@@ -91,29 +91,26 @@ var gameOfLife = {
     // 1. Count alive neighbors for all cells
     // 2. Set the next state of all cells based on their alive neighbors
 
-    this.forEachCell(function(cell, x, y) {
-      var aliveNeighbors = 0;
+    // this.forEachCell(function(cell, x, y) {
+    //   var aliveNeighbors = 0;
 
-      this.forEachCell(function(cell2, x2, y2) {
-        if((Math.abs(x-x2) <= 1) && (Math.abs(y-y2) <= 1) && cell2.getAttribute('data-status') === "alive") {
-          aliveNeighbors ++;
-        }
+    //   this.forEachCell(function(cell2, x2, y2) {
+    //     if((Math.abs(x-x2) <= 1) && (Math.abs(y-y2) <= 1) && cell2.getAttribute('data-status') === "alive") {
+    //       aliveNeighbors ++;
+    //     }
 
-        if((cell.getAttribute("data-status") === "alive") && (aliveNeighbors < 2 || aliveNeighbors > 3)) {
-          cell.setAttribute("data-status") = "dead";
-        }
+    //     if((cell.getAttribute("data-status") === "alive") && (aliveNeighbors < 2 || aliveNeighbors > 3)) {
+    //       cell.setAttribute("data-status") = "dead";
+    //     }
 
-        if((cell.getAttribute("data-status") === "dead") && (aliveNeighbors === 3)) {
-          cell.setAttribute("data-status") = "alive";
-        }
-        }
-      });
-    });
+    //     if((cell.getAttribute("data-status") === "dead") && (aliveNeighbors === 3)) {
+    //       cell.setAttribute("data-status", "alive");
+    //     }
+    //     }
+    //   });
+    // });
 
-    var newBoard = [];
-
-    var hasChanged = false;
-
+    // newBoard variable for next generation
 
     function neighborEvolve(cell, x, y) {
       var aliveNeighbors = 0;
@@ -122,21 +119,29 @@ var gameOfLife = {
         for(var j = y-1; j <= y + 1; j++) {
           //continue if the coordinates of the neighbor is found
           if(i === x && j === y) continue;
-          
+          var n = document.get(i + '-' + j);
+          if(n === null) continue;
+          //get number of aliveNeighbors in the current generation
+          if(n.getAttribute === "alive") {
+            aliveNeighbors++;
+          }
+        }
+      }
+
+      //set cell status for next generation
+      if(cell.getAttribute("data-status") === "alive") {
+        if(aliveNeighbors < 2 || aliveNeighbors > 3) {
+          cell.setAttribute("data-status", "dead");
+        } else if (cell.getAttribute("data-status") === "dead" && (aliveNeighbors === 3)) {
+          cell.setAttribute("data-status", "alive"); 
         }
       }
     }
 
-    // console.log(newBoard);
-
-    gameOfLife.forEachCell(neighbor_eval);
-
+    //Go through each cell by using forEachCell function and apply neighbotEvolve function
+    gameOfLife.forEachCell(neighborEvolve);
     console.log(newBoard);
 
-    gameOfLife.forEachCell(cell_next_step);
-
-    return hasChanged;
-  },
     
   },
 
