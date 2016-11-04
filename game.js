@@ -110,7 +110,33 @@ var gameOfLife = {
       });
     });
 
+    var newBoard = [];
 
+    var hasChanged = false;
+
+
+    function neighborEvolve(cell, x, y) {
+      var aliveNeighbors = 0;
+      //run for loop to find neighbor boundary
+      for(var i = x-1; i <= x + 1; i++) {
+        for(var j = y-1; j <= y + 1; j++) {
+          //continue if the coordinates of the neighbor is found
+          if(i === x && j === y) continue;
+          
+        }
+      }
+    }
+
+    // console.log(newBoard);
+
+    gameOfLife.forEachCell(neighbor_eval);
+
+    console.log(newBoard);
+
+    gameOfLife.forEachCell(cell_next_step);
+
+    return hasChanged;
+  },
     
   },
 
