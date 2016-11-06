@@ -2,9 +2,12 @@ var gameOfLife = {
     width: 50,
     height: 50,
     stepInterval: null,
+    multicolor: false,
 
     createAndShowBoard: function() {
-        let dimensions = window.prompt('Set grid size \n(e.g. \'20\' for a 20 x 20 grid)');
+        let dimensions = window.prompt('Welcome to Conway\'s Game of Life \n\n\"Game of life is a cellular automaton devised by the British mathematician John Horton Conway in 1970. Every cell interacts with its eight neighbours, which are the cells that are horizontally, vertically, or diagonally adjacent. At each step in time, the following transitions occur:\n\nAny live cell with fewer than two live neighbours dies, as if caused by under-population.\nAny live cell with two or three live neighbours lives on to the next generation.\nAny live cell with more than three live neighbours dies, as if by over-population.\nAny dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.\"\n(https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)\n\nThese 4 simple rules create a universe of recognizable patterns that interact with each other over generations in seemingly random ways.\n\nGo ahead and choose a grid size! \n(e.g. \'20\' for a 20 x 20 grid)'
+      );
+
         gameOfLife.width = dimensions;
         gameOfLife.height = dimensions;
 
@@ -29,6 +32,7 @@ var gameOfLife = {
         this.setupBoardEvents();
     },
 
+
     forEachCell: function(iteratorFunc) {
 
         var rows = document.getElementsByTagName("TBODY")[0].children;
@@ -48,9 +52,7 @@ var gameOfLife = {
     setupBoardEvents: function() {
 
         var onCellClick = function(e) {
-            // QUESTION TO ASK YOURSELF: What is "this" equal to here?
 
-            // how to set the style of the cell when it's clicked
             if (this.getAttribute('data-status') == 'dead') {
                 this.className = "alive";
                 this.setAttribute('data-status', 'alive');
@@ -61,7 +63,7 @@ var gameOfLife = {
         };
 
         this.forEachCell(function(cell) {
-            cell.onclick = onCellClick;
+          cell.addEventListener("mouseover", onCellClick);
         });
     },
 
@@ -79,7 +81,7 @@ var gameOfLife = {
                 }
             }
             return neighbors;
-        }
+        };
 
         gameOfLife.forEachCell(function(cell, x, y) {
             var neighbors = getNeighbors(x, y);
@@ -102,8 +104,13 @@ var gameOfLife = {
         gameOfLife.forEachCell(function(cell) {
             if (cell.getAttribute("data-status") === "alive") {
                 cell.setAttribute("class", "alive");
+
+                if (gameOfLife.multicolor) {
+                  cell.setAttribute("style", gameOfLife.colorChooser());
+                }
             } else {
                 cell.setAttribute("class", "dead");
+                cell.removeAttribute("style");
             }
         });
 
@@ -112,13 +119,21 @@ var gameOfLife = {
         gameOfLife.updateGen(currentGen);
     },
 
+    colorChooser: function(){
+      var red = Math.floor(Math.random() * 255 + 1);
+      var green = Math.floor(Math.random() * 255 + 1);
+      var blue = Math.floor(Math.random() * 255 + 1);
+
+      return `background-color:rgb(${red}, ${green}, ${blue});`
+    },
+
     updateGen: function(currentGen){
       currentGen = Number(currentGen) + 1;
 
       var genCircles = [].slice.call(document.getElementsByClassName("generations"));
 
-      genCircles.forEach(function(circle){ circle.innerHTML = currentGen; })
-    },
+      genCircles.forEach(function(circle){ circle.innerHTML = currentGen; });
+    }
 
 };
 
@@ -143,6 +158,7 @@ document.getElementById("clear_btn").onclick = function() {
     gameOfLife.forEachCell(function(cell) {
         cell.setAttribute("data-status", "dead");
         cell.setAttribute("class", "dead");
+        cell.removeAttribute("style");
     });
 
     gameOfLife.updateGen(0);
@@ -157,11 +173,22 @@ document.getElementById("reset_btn").onclick = function() {
         if (Math.floor(randNum) === 1) {
             cell.setAttribute("data-status", "dead");
             cell.setAttribute("class", "dead");
+            cell.removeAttribute("style");
         } else {
             cell.setAttribute("data-status", "alive");
             cell.setAttribute("class", "alive");
+            if (gameOfLife.multicolor) {
+              cell.setAttribute("style", gameOfLife.colorChooser());
+            }
         }
     });
 
     gameOfLife.updateGen(0);
 };
+
+document.getElementById("multicolor").onclick = function(){
+  gameOfLife.multicolor = true;
+}
+document.getElementById("unicolor").onclick = function(){
+  gameOfLife.multicolor = false;
+}
