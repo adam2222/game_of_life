@@ -1,8 +1,9 @@
 body {
   position: relative;
+  /*text-align: center;*/
   margin: 0 auto;
-  padding: 10px;
-  width: 800px;
+  /*padding: 10px;*/
+  /*width: 600px;*/
   /*height: 500px;*/
 }
 
@@ -11,8 +12,8 @@ h1, h2 {
 }
 #board{
   margin: 0 auto;
-  width: 700px;
-  height: 700px;
+  width: 600px;
+  height: 600px;
 }
 
 
@@ -22,10 +23,14 @@ h1, h2 {
   height: 18px;*/
 }
 
+#genDiv{
+  position: relative;
+  width: 600px;
+  height: 600px;
+  margin: 0 auto;
+}
 .generations {
   position: absolute;
-  top: 50px;
-  left: 25px;
   display: inline-block;
   border-radius: 50%;
   width: 50px;
@@ -39,17 +44,21 @@ h1, h2 {
 
 }
 
+#gen1{
+  left: 0px;
+}
+
 #gen2{
-  left: 91%;
+  left: 550px;
 }
 
 #gen3{
-  top: 750px;
-  left: 91%;
+  top: 550px;
+  left: 550px;
 }
 
 #gen4{
-  top: 750px;
+  top: 550px;
 }
 
 td.alive {
@@ -63,4 +72,11 @@ td.dead {
 #control_panel {
   margin: 10px auto;
   text-align: center;
+}
+
+footer {
+  position: absolute;
+  display: inline-block;
+  top: 100%;
+  left: 5%;
 }

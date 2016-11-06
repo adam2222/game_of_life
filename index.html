@@ -11,24 +11,26 @@
 <body>
   <h2>Game of Life</h2>
 
-  <div class="generations" id="gen1">
-    1
+  <div id="genDiv">
+    <div class="generations" id="gen1">
+      1
+    </div>
+
+    <div class="generations" id="gen2">
+      1
+    </div>
+
+    <div class="generations" id="gen3">
+      1
+    </div>
+
+    <div class="generations" id="gen4">
+      1
+    </div>
+
+    <table id='board'></table>
+
   </div>
-
-  <div class="generations" id="gen2">
-    1
-  </div>
-
-  <div class="generations" id="gen3">
-    1
-  </div>
-
-  <div class="generations" id="gen4">
-    1
-  </div>
-
-  <table id='board'></table>
-
 
   <div id='control_panel'>
     <button id='step_btn' class='btn btn-success'>Step</button>
@@ -39,11 +41,14 @@
 
   <br><br>
 
+
   <footer class="footer">
     <div class="container">
       <p class="text-muted">Built by Adam M. Intrator at <a href="http://www.fullstackacademy.com/">Fullstack Academy</a></p>
     </div>
   </footer>
+
+
 
   <script src="game.js"></script>
 

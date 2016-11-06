@@ -4,9 +4,9 @@ var gameOfLife = {
     stepInterval: null,
 
     createAndShowBoard: function() {
-        let dimensions = window.prompt('Set grid size \n(e.g. \'20\' for a 20 x 20 grid)');
-        gameOfLife.width = dimensions;
-        gameOfLife.height = dimensions;
+        // let dimensions = window.prompt('Set grid size \n(e.g. \'20\' for a 20 x 20 grid)');
+        // gameOfLife.width = dimensions;
+        // gameOfLife.height = dimensions;
 
         var goltable = document.createElement("tbody");
 
