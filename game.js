@@ -3,6 +3,7 @@ var gameOfLife = {
     height: 50,
     stepInterval: null,
     multicolor: false,
+    mouseDown: false,
 
     createAndShowBoard: function() {
         let dimensions = window.prompt('Welcome to Conway\'s Game of Life \n\n\"Game of life is a cellular automaton devised by the British mathematician John Horton Conway in 1970. Every cell interacts with its eight neighbours, which are the cells that are horizontally, vertically, or diagonally adjacent. At each step in time, the following transitions occur:\n\nAny live cell with fewer than two live neighbours dies, as if caused by under-population.\nAny live cell with two or three live neighbours lives on to the next generation.\nAny live cell with more than three live neighbours dies, as if by over-population.\nAny dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.\"\n(https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)\n\nThese 4 simple rules create a universe of recognizable patterns that interact with each other over generations in seemingly random ways.\n\nGo ahead and choose a grid size! \n(e.g. \'20\' for a 20 x 20 grid)'
@@ -50,9 +51,12 @@ var gameOfLife = {
     },
 
     setupBoardEvents: function() {
+        // document.getElementById("genDiv").addEventListener("mousedown", function(){ gameOfLife.mouseDown = true; });
+        //
+        // document.getElementById("genDiv").addEventListener("mouseup", function(){ gameOfLife.mouseDown = false; });
 
-        var onCellClick = function(e) {
-
+        var onMouseOver = function(e) {
+          // if (gameOfLife.mousDown === true){
             if (this.getAttribute('data-status') == 'dead') {
                 this.className = "alive";
                 this.setAttribute('data-status', 'alive');
@@ -60,10 +64,10 @@ var gameOfLife = {
                 this.className = "dead";
                 this.setAttribute('data-status', 'dead');
             }
+          // };
         };
-
         this.forEachCell(function(cell) {
-          cell.addEventListener("mouseover", onCellClick);
+          cell.addEventListener("mouseover", onMouseOver);
         });
     },
 
