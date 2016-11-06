@@ -6,11 +6,11 @@ var gameOfLife = {
     mouseDown: false,
 
     createAndShowBoard: function() {
-        let dimensions = window.prompt('Welcome to Conway\'s Game of Life \n\n\"Game of life is a cellular automaton devised by the British mathematician John Horton Conway in 1970. Every cell interacts with its eight neighbours, which are the cells that are horizontally, vertically, or diagonally adjacent. At each step in time, the following transitions occur:\n\nAny live cell with fewer than two live neighbours dies, as if caused by under-population.\nAny live cell with two or three live neighbours lives on to the next generation.\nAny live cell with more than three live neighbours dies, as if by over-population.\nAny dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.\"\n(https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)\n\nThese 4 simple rules create a universe of recognizable patterns that interact with each other over generations in seemingly random ways.\n\nGo ahead and choose a grid size! \n(e.g. \'20\' for a 20 x 20 grid)'
-      );
-
-        gameOfLife.width = dimensions;
-        gameOfLife.height = dimensions;
+      //   let dimensions = window.prompt('Welcome to Conway\'s Game of Life \n\n\"Game of life is a cellular automaton devised by the British mathematician John Horton Conway in 1970. Every cell interacts with its eight neighbours, which are the cells that are horizontally, vertically, or diagonally adjacent. At each step in time, the following transitions occur:\n\nAny live cell with fewer than two live neighbours dies, as if caused by under-population.\nAny live cell with two or three live neighbours lives on to the next generation.\nAny live cell with more than three live neighbours dies, as if by over-population.\nAny dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.\"\n(https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)\n\nThese 4 simple rules create a universe of recognizable patterns that interact with each other over generations in seemingly random ways.\n\nGo ahead and choose a grid size! \n(e.g. \'50\' for a 50 x 50 grid). Reload page to choose a new grid size.'
+      // );
+      //
+      //   gameOfLife.width = dimensions;
+      //   gameOfLife.height = dimensions;
 
         var goltable = document.createElement("tbody");
 
@@ -152,7 +152,7 @@ document.getElementById("step_btn").onclick = gameOfLife.step;
 var interval;
 document.getElementById("play_btn").onclick =
     function() {
-        interval = setInterval(gameOfLife.step, 50);
+        interval = setInterval(gameOfLife.step, 100);
     };
 
 // Clear board
@@ -192,12 +192,12 @@ document.getElementById("reset_btn").onclick = function() {
 
 document.getElementById("multicolor").onclick = function(){
   gameOfLife.multicolor = true;
-}
+};
 document.getElementById("unicolor").onclick = function(){
   gameOfLife.multicolor = false;
-}
+};
 
-var gosperGliders = [ '24-11',
+var gosper = [ '24-11',
   '25-11',
   '35-11',
   '36-11',
@@ -233,12 +233,34 @@ var gosperGliders = [ '24-11',
   '25-24',
   '26-25' ];
 
-var selectGospers = function(){
-  gosperGliders.forEach(function(xy){
-    console.log(xy);
+var pentadecathlon =
+[ '15-11',
+'16-11',
+'17-11',
+'14-12',
+'18-12',
+'13-13',
+'19-13',
+'12-15',
+'20-15',
+'12-16',
+'20-16',
+'13-18',
+'19-18',
+'14-19',
+'18-19',
+'15-20',
+'16-20',
+'17-20' ];
+
+var selectPattern = function(){
+  var array = window[this.id];
+  array.forEach(function(xy){
     document.getElementById(xy).setAttribute("data-status", "alive");
-      document.getElementById(xy).className = "alive";
+    document.getElementById(xy).className = "alive";
   });
 };
 
-document.getElementById("gosper").addEventListener('click', selectGospers);
+document.getElementById("gosper").addEventListener('click', selectPattern);
+
+document.getElementById("pentadecathlon").addEventListener('click', selectPattern);

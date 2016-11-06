@@ -33,18 +33,32 @@
   </div>
 
   <div id='control_panel'>
-    <button id='step_btn' class='btn btn-success'>Step</button>
-    <button id='play_btn' class='btn btn-primary'>Play</button>
-    <button id='reset_btn' class='btn btn-warning'>Reset Random</button>
+
+    <button id='reset_btn' class='btn btn-warning'>Random Seed Pattern</button>
+
     <button id='clear_btn' class='btn btn-info'>Clear</button>
+
+    <div class="dropdown">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownMenuButton">Pre-defined seed patterns <span class="caret"></span></button>
+
+      <ul class="dropdown-menu">
+        <li><a href="#" id="gosper">Gosper Gliders</a></li>
+
+        <li><a href="#" id="pentadecathlon">Pentadecathlon</a></li>
+      </ul>
+    </div>
     <p><p>
-    <button id='multicolor' class='btn btn-danger'>Multicolor!</button>
+    <button id='step_btn' class='btn btn-success'>Play: step-by-step</button>
+
+    <button id='play_btn' class='btn btn-primary'>Play: continuous</button>
+
+    <p><p>
     <button id='unicolor' class='btn btn-info'>Single color</button>
-    <button id='gosper' class='btn btn-info'>Gosper Gliders</button>
+
+    <button id='multicolor' class='btn btn-danger'>Multicolor!</button>
   </div>
 
   <br><br>
-
 
   <footer class="footer">
     <div class="container">
@@ -53,7 +67,8 @@
   </footer>
 
 
-
+  <script src="libraries/jquery-3.1.1.min.js"></script>
+  <script src="libraries/bootstrap.min.js"></script>
   <script src="game.js"></script>
 
 </body>
