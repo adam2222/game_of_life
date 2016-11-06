@@ -25,29 +25,27 @@ var gameOfLife = {
       }
       goltable.innerHTML = tablehtml;
 
-        // add table to the #board element
-        var board = document.getElementById('board');
-        board.appendChild(goltable);
+    // add table to the #board element
+    var board = document.getElementById('board');
+    board.appendChild(goltable);
 
-        // once html elements are added to the page, attach events to them
-        this.setupBoardEvents();
+    // once html elements are added to the page, attach events to them
+    this.setupBoardEvents();
     },
 
 
     forEachCell: function(iteratorFunc) {
+      var rows = document.getElementsByTagName("TBODY")[0].children;
+      rows = [].slice.call(rows);
 
-        var rows = document.getElementsByTagName("TBODY")[0].children;
-        rows = [].slice.call(rows);
-
-        rows.forEach(function(row) {
-            var rowCells = [].slice.call(row.children);
-            rowCells.forEach(function(cell) {
-                var x = cell.id.split("-")[0];
-                var y = cell.id.split("-")[1];
-                iteratorFunc(cell, x, y);
-            })
-        })
-
+      rows.forEach(function(row) {
+          var rowCells = [].slice.call(row.children);
+          rowCells.forEach(function(cell) {
+              var x = cell.id.split("-")[0];
+              var y = cell.id.split("-")[1];
+              iteratorFunc(cell, x, y);
+          });
+      });
     },
 
     setupBoardEvents: function() {
@@ -250,56 +248,54 @@ var pentadecathlon = [ '15-11',
   '16-20',
   '17-20' ];
 
-var pulsar = [
-  "3-1",
-  "4-1",
-  "5-1",
-  "9-1",
-  "10-1",
-  "11-1",
-  "1-3",
-  "6-3",
-  "8-3",
-  "13-3",
-  "1-4",
-  "6-4",
-  "8-4",
-  "13-4",
-  "1-5",
-  "6-5",
-  "8-5",
-  "13-5",
-  "3-6",
-  "4-6",
-  "5-6",
-  "9-6",
-  "10-6",
-  "11-6",
-  "3-8",
-  "4-8",
-  "5-8",
-  "9-8",
-  "10-8",
-  "11-8",
-  "1-12",
-  "6-12",
-  "8-12",
-  "13-12",
-  "1-13",
-  "6-13",
-  "8-13",
-  "13-13",
-  "1-14",
-  "6-14",
-  "8-14",
-  "13-14",
-  "3-16",
-  "4-16",
-  "5-16",
-  "9-16",
-  "10-16",
-  "11-16"
-];
+var pulsar = [ '13-11',
+  '14-11',
+  '15-11',
+  '19-11',
+  '20-11',
+  '21-11',
+  '11-13',
+  '16-13',
+  '18-13',
+  '23-13',
+  '11-14',
+  '16-14',
+  '18-14',
+  '23-14',
+  '11-15',
+  '16-15',
+  '18-15',
+  '23-15',
+  '13-16',
+  '14-16',
+  '15-16',
+  '19-16',
+  '20-16',
+  '21-16',
+  '13-18',
+  '14-18',
+  '15-18',
+  '19-18',
+  '20-18',
+  '21-18',
+  '11-19',
+  '16-19',
+  '18-19',
+  '23-19',
+  '11-20',
+  '16-20',
+  '18-20',
+  '23-20',
+  '11-21',
+  '16-21',
+  '18-21',
+  '23-21',
+  '13-23',
+  '14-23',
+  '15-23',
+  '19-23',
+  '20-23',
+  '21-23' ];
 
 var selectPattern = function(){
   var array = window[this.id];
@@ -312,3 +308,5 @@ var selectPattern = function(){
 document.getElementById("gosper").addEventListener('click', selectPattern);
 
 document.getElementById("pentadecathlon").addEventListener('click', selectPattern);
+
+document.getElementById("pulsar").addEventListener('click', selectPattern);
