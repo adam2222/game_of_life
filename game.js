@@ -152,7 +152,7 @@ document.getElementById("step_btn").onclick = gameOfLife.step;
 var interval;
 document.getElementById("play_btn").onclick =
     function() {
-        interval = setInterval(gameOfLife.step, 100);
+        interval = setInterval(gameOfLife.step, 50);
     };
 
 // Clear board
@@ -196,3 +196,49 @@ document.getElementById("multicolor").onclick = function(){
 document.getElementById("unicolor").onclick = function(){
   gameOfLife.multicolor = false;
 }
+
+var gosperGliders = [ '24-11',
+  '25-11',
+  '35-11',
+  '36-11',
+  '23-12',
+  '25-12',
+  '35-12',
+  '36-12',
+  '1-13',
+  '2-13',
+  '10-13',
+  '11-13',
+  '23-13',
+  '24-13',
+  '1-14',
+  '2-14',
+  '9-14',
+  '11-14',
+  '9-15',
+  '10-15',
+  '17-15',
+  '18-15',
+  '17-16',
+  '19-16',
+  '17-17',
+  '36-18',
+  '37-18',
+  '36-19',
+  '38-19',
+  '36-20',
+  '25-23',
+  '26-23',
+  '27-23',
+  '25-24',
+  '26-25' ];
+
+var selectGospers = function(){
+  gosperGliders.forEach(function(xy){
+    console.log(xy);
+    document.getElementById(xy).setAttribute("data-status", "alive");
+      document.getElementById(xy).className = "alive";
+  });
+};
+
+document.getElementById("gosper").addEventListener('click', selectGospers);
